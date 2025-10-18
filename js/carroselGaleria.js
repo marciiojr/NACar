@@ -35,7 +35,7 @@ class ImageAutoSlider {
             const imageItem = document.createElement('div');
             imageItem.className = `
     image-item flex-shrink-0 
-    w-72 h-72     /* 📱 mobile: um pouco maior que 48 */
+    w-72 h-92     /* 📱 mobile: um pouco maior que 48 */
     sm:w-64 sm:h-64  /* 📱 tablets pequenos */
     md:w-72 md:h-72  /* 💻 tablets grandes */
     lg:w-80 lg:h-80  /* 🖥️ desktop */
