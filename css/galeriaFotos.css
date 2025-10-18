@@ -1,0 +1,43 @@
+    @keyframes scroll-right {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+
+    .infinite-scroll {
+        animation: scroll-right 30s linear infinite;
+    }
+
+    /* ⚙️ Corrigido: máscara com transparência em preto, não branco */
+    .scroll-container {
+        mask: linear-gradient(
+            90deg,
+            transparent 0%,
+            black 10%,
+            black 90%,
+            transparent 100%
+        );
+        -webkit-mask: linear-gradient(
+            90deg,
+            transparent 0%,
+            black 10%,
+            black 90%,
+            transparent 100%
+        );
+    }
+
+    .image-item {
+        transition: all 0.3s ease;
+    }
+
+    .image-item:hover {
+        transform: scale(1.05);
+        filter: brightness(1.05);
+    }
+
+    .pause-animation:hover .infinite-scroll {
+        animation-play-state: paused;
+    }

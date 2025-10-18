@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NA Car - Centro Automotivo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/carrosel.css">
+    <link rel="stylesheet" href="/css/galeriaFotos.css">
+    <style>
+        /* Transições suaves */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-left {
+            opacity: 0;
+            transform: translateX(-140px);
+            transition: all 2s ease;
+        }
+
+        .fade-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .fade-right {
+            opacity: 0;
+            transform: translateX(140px);
+            transition: all 2s ease;
+        }
+
+        .fade-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Fundo gradiente */
+        .hero-gradient {
+            background: linear-gradient(360deg, rgba(150, 0, 0, 0.9) 0%, rgba(150, 0, 0, 0) 50%, rgba(32, 0, 0, 0.641) 100%);
+        }
+
+        /* Animações para as novas sections */
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.8s ease;
+        }
+
+        .scale-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: all 1s ease;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Estilo para cards de serviços */
+        .service-card {
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Estilo para cards de diferenciais */
+        .feature-card {
+            transition: all 0.3s ease;
+            border-radius: 12px;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilo para cards de depoimentos */
+        .testimonial-card {
+            transition: all 0.3s ease;
+            border-radius: 12px;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilo para galeria de resultados */
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            transition: all 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        /* Modal para galeria */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+        }
+
+        .prev-modal {
+            left: 20px;
+        }
+
+        .next-modal {
+            right: 20px;
+        }
+
+        /* Animações */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(130px);
+            transition: all 1s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 text-white font-sans">
+
+    <!-- HERO SECTION -->
+    <section class="relative flex items-center justify-center h-screen overflow-hidden">
+        <!-- Imagem de fundo -->
+        <img src="estacao-de-detalhamento-de-lavagem-de-carro.jpg" alt="Oficina NA Car"
+            class="absolute inset-0 w-full h-full object-cover brightness-75">
+
+        <!-- Camada gradiente -->
+        <div class="absolute inset-0 hero-gradient"></div>
+
+        <!-- Conteúdo -->
+        <div class="relative z-10 max-w-4xl text-left p-8 md:p-12">
+            <div class="fade-left">
+                <img src="logo-removebg-preview.png" alt="Logo NA Car" class="w-52 drop-shadow-lg">
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 fade-left">
+                Cuidamos do seu carro com — <br>
+                <span class="text-red-600">excelência, agilidade e confiança</span> há mais de 18 anos
+            </h1>
+            <p class="text-lg md:text-xl text-gray-300 font-semibold mb-8 fade-left">
+                NA CAR é referência em Bragança e Atibaia em funilaria, pintura e mecânica em geral.
+                Oferecemos atendimento ágil, peças de qualidade e parceria com todas as seguradoras, garantindo o melhor
+                resultado para o seu veículo.
+
+            </p>
+            <div class="mt-8 fade-left">
+                <a href="https://wa.me/5588996256876?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20V%20Lopes%20Motos%20e%20gostaria%20de%20solicitar%20um%20or%C3%A7amento."
+                    target="_blank"
+                    class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium text-base transition-all duration-300 transform hover:scale-105 inline-flex items-center gap-2 shadow-lg">
+                    <i class="fab fa-whatsapp text-lg"></i> Agende seu atendimento agora!
+                </a>
+            </div>
+        </div>
+
+        <!-- ONDULAÇÃO BRANCA INFERIOR -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+            <svg viewBox="0 0 500 80" preserveAspectRatio="none" class="w-full h-24">
+                <path d="M0,40 C150,100 350,-20 500,40 L500,80 L0,80 Z" fill="white"></path>
+            </svg>
+        </div>
+    </section>
+
+    <section class="bg-white py-20 px-6 md:px-16 overflow-hidden relative">
+        <div class="max-w-7xl mx-auto text-center mb-16">
+            <h3 class="text-red-600 font-semibold text-lg mb-2 tracking-wider uppercase fade-right">Nossas Soluções</h3>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 fade-right">
+                Do motor à pintura: excelência em <span class="text-red-600">Cada Detalhe</span>
+            </h2>
+            <div class="w-24 h-1 bg-gradient-to-r from-red-600 to-red-400 mx-auto mt-6 rounded-full"></div>
+        </div>
+
+        <div class="relative max-w-6xl mx-auto fade-right">
+            <!-- Botão Anterior -->
+            <button id="prev"
+                class="nav-button absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-red-600 text-white p-4 rounded-full hover:bg-red-700 z-10 shadow-lg">
+                <i class="fas fa-chevron-left text-lg"></i>
+            </button>
+
+            <!-- Carrossel -->
+            <div class="overflow-hidden px-2">
+                <div id="carousel" class="flex transition-transform duration-500 ease-out">
+                    <!-- Card 1 - Injeção Eletrônica -->
+                    <div class="card flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 p-4">
+                        <div
+                            class="card-gradient text-white rounded-2xl shadow-xl p-8 text-center card-hover h-full flex flex-col">
+                            <div
+                                class="icon-wrapper w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                                <i class="fas fa-spray-can text-3xl text-white"></i>
+                            </div>
+                            <h3 class="font-bold text-xl mb-4">Funilaria e Pintura</h3>
+                            <p class="text-red-100 leading-relaxed flex-grow">
+                                Recuperamos a estética do seu veículo com acabamento de fábrica e produtos de alta
+                                qualidade.
+                            </p>
+                            <div class="mt-4 pt-4 border-t border-red-400/30">
+                                <span class="text-red-200 text-sm font-medium">Acabamento Perfeito</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 - Freios -->
+                    <div class="card flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 p-4">
+                        <div
+                            class="card-gradient text-white rounded-2xl shadow-xl p-8 text-center card-hover h-full flex flex-col">
+                            <div
+                                class="icon-wrapper w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                                <i class="fas fa-tools text-3xl text-white"></i>
+                            </div>
+                            <h3 class="font-bold text-xl mb-4">Mecânica em Geral</h3>
+                            <p class="text-red-100 leading-relaxed flex-grow">
+                                Manutenção completa de freios, suspensão, motor e ar-condicionado, garantindo desempenho
+                                e segurança.
+                            </p>
+                            <div class="mt-4 pt-4 border-t border-red-400/30">
+                                <span class="text-red-200 text-sm font-medium">Manutenção Completa</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 - Remap -->
+                    <div class="card flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 p-4">
+                        <div
+                            class="card-gradient text-white rounded-2xl shadow-xl p-8 text-center card-hover h-full flex flex-col">
+                            <div
+                                class="icon-wrapper w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                                <i class="fas fa-file-contract text-3xl text-white"></i>
+                            </div>
+                            <h3 class="font-bold text-xl mb-4">Serviços para Seguradoras</h3>
+                            <p class="text-red-100 leading-relaxed flex-grow">
+                                Atendemos todas as seguradoras com processos rápidos e acompanhamento completo do início
+                                ao fim.
+                            </p>
+                            <div class="mt-4 pt-4 border-t border-red-400/30">
+                                <span class="text-red-200 text-sm font-medium">Parceria Confiável</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 - Suspensão -->
+                    <div class="card flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 p-4">
+                        <div
+                            class="card-gradient text-white rounded-2xl shadow-xl p-8 text-center card-hover h-full flex flex-col">
+                            <div
+                                class="icon-wrapper w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                                <i class="fas fa-gem text-3xl text-white"></i>
+                            </div>
+                            <h3 class="font-bold text-xl mb-4">Polimento e Higienização</h3>
+                            <p class="text-red-100 leading-relaxed flex-grow">
+                                Deixe seu carro com brilho impecável. Polimento técnico e higienização interna e externa
+                                completa.
+                            </p>
+                            <div class="mt-4 pt-4 border-t border-red-400/30">
+                                <span class="text-red-200 text-sm font-medium">Brilho Impecável</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 5 - Elétrica -->
+                    <div class="card flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 p-4">
+                        <div
+                            class="card-gradient text-white rounded-2xl shadow-xl p-8 text-center card-hover h-full flex flex-col">
+                            <div
+                                class="icon-wrapper w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                                <i class="fas fa-cogs text-3xl text-white"></i>
+                            </div>
+                            <h3 class="font-bold text-xl mb-4">Troca de Peças e Acessórios</h3>
+                            <p class="text-red-100 leading-relaxed flex-grow">
+                                Peças originais e de alta performance, com durabilidade e o melhor custo-benefício.
+                            </p>
+                            <div class="mt-4 pt-4 border-t border-red-400/30">
+                                <span class="text-red-200 text-sm font-medium">Qualidade Garantida</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 6 - Manutenção Preventiva -->
+                    <div class="card flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 p-4">
+                        <div
+                            class="card-gradient text-white rounded-2xl shadow-xl p-8 text-center card-hover h-full flex flex-col">
+                            <div
+                                class="icon-wrapper w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                                <i class="fas fa-user-cog text-3xl text-white"></i>
+                            </div>
+                            <h3 class="font-bold text-xl mb-4">Manutenção Preventiva</h3>
+                            <p class="text-red-100 leading-relaxed flex-grow">
+                                Equipe pronta para oferecer soluções rápidas, transparentes e sob medida para você.
+                            </p>
+                            <div class="mt-4 pt-4 border-t border-red-400/30">
+                                <span class="text-red-200 text-sm font-medium">Prevenção Inteligente</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botão Próximo -->
+            <button id="next"
+                class="fade-right nav-button absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-red-600 text-white p-4 rounded-full hover:bg-red-700 z-10 shadow-lg">
+                <i class="fas fa-chevron-right text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Indicadores -->
+        <div class="flex justify-center mt-12 space-x-3 fade-right" id="dots"></div>
+
+        <!-- CTA -->
+        <div class="text-center mt-16 fade-right">
+            <p class="text-lg max-w-3xl mx-auto text-gray-600">
+                Precisa de um serviço especializado? Nossa equipe está pronta para atender você!
+            </p>
+            <div class="mt-8 fade-right">
+                <a href="https://wa.me/5588996256876?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20V%20Lopes%20Motos%20e%20gostaria%20de%20solicitar%20um%20or%C3%A7amento."
+                    target="_blank"
+                    class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium text-base transition-all duration-300 transform hover:scale-105 inline-flex items-center gap-2 shadow-lg">
+                    <i class="fab fa-whatsapp text-lg"></i> Agende seu atendimento agora!
+                </a>
+            </div>
+        </div>
+    </section>
+
+<!-- SECTION NOSSOS TRABALHOS -->
+<section class="relative bg-gray-100 text-black py-20 overflow-hidden">
+
+  <!-- 🔹 Onda separadora superior -->
+  <div class="absolute top-0 left-0 w-full overflow-hidden leading-none">
+    <svg viewBox="0 0 500 80" preserveAspectRatio="none" class="w-full h-20">
+      <path d="M0,40 C150,100 350,-20 500,40 L500,0 L0,0 Z" fill="white"></path>
+    </svg>
+  </div>
+
+  <!-- 🔹 Fundo suave -->
+  <div class="absolute inset-0 bg-gradient-to-b from-white-50 via-white to-white-50 z-0"></div>
+
+  <!-- 🔹 Conteúdo -->
+  <div class="relative z-10 flex flex-col items-center justify-center text-center px-6 md:px-12 fade-left">
+    <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3 tracking-tight">
+      Nossos Trabalhos
+    </h2>
+
+    <p class="text-gray-600 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+      Confira alguns dos projetos que realizamos com dedicação, tecnologia e atenção a cada detalhe.
+    </p>
+
+    <div class="w-24 h-1 bg-gradient-to-r from-red-600 to-red-400 mx-auto rounded-full mt-4"></div>
+
+    <!-- 🔹 Container das imagens -->
+    <div class="relative z-10 w-full flex items-center justify-center py-10 pause-animation">
+      <div class="scroll-container w-full max-w-7xl px-4">
+        <div class="infinite-scroll flex gap-6 w-max">
+          <!-- Imagens inseridas via JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔹 Onda separadora inferior -->
+  <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+    <svg viewBox="0 0 500 80" preserveAspectRatio="none" class="w-full h-20">
+      <path d="M0,40 C150,-20 350,100 500,40 L500,80 L0,80 Z" fill="white"></path>
+    </svg>
+  </div>
+</section>
+
+
+<!-- SECTION DEPOIMENTOS (com 5 estrelas) -->
+<section class="relative bg-white text-black py-20 px-6 md:px-16 overflow-hidden fade-right">
+  <div class="max-w-7xl mx-auto">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-16 fade-in">
+      <h2 class="text-3xl md:text-4xl font-extrabold mb-4 leading-tight">
+        A satisfação dos nossos clientes é o nosso melhor resultado.
+      </h2>
+      <div class="h-1 w-24 bg-red-600 mx-auto mb-6"></div>
+      <p class="text-base md:text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
+        Na Car Centro Automotivo, cada cliente é tratado com atenção e respeito. Nos orgulhamos de manter
+        relacionamentos duradouros e de sermos reconhecidos pela qualidade, agilidade e atendimento humano
+        que oferecemos todos os dias.
+      </p>
+    </div>
+
+    <!-- Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Depoimento 1 -->
+      <div class="testimonial-card bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 scale-in">
+        <div class="text-red-600 mb-4 text-4xl">
+          <i class="fas fa-quote-left"></i>
+        </div>
+        <p class="text-gray-700 mb-6 italic text-base md:text-lg leading-relaxed">
+          "Levei meu carro após um sinistro e fiquei impressionado com o resultado. O atendimento foi
+          rápido, transparente e a pintura ficou perfeita!"
+        </p>
+
+        <!-- Avaliação: 5 estrelas -->
+        <div class="flex items-center mb-4" aria-label="Avaliação: 5 de 5 estrelas">
+          <div class="flex gap-1 mr-3">
+            <!-- 5 SVG stars -->
+            <svg class="w-4 h-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.921-.755 1.688-1.54 1.118L10 13.347l-3.453 2.708c-.785.57-1.84-.197-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.543 9.393c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69L9.049 2.927z"/></svg>
+            <svg class="w-4 h-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.921-.755 1.688-1.54 1.118L10 13.347l-3.453 2.708c-.785.57-1.84-.197-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.543 9.393c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69L9.049 2.927z"/></svg>
+            <svg class="w-4 h-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.921-.755 1.688-1.54 1.118L10 13.347l-3.453 2.708c-.785.57-1.84-.197-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.543 9.393c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69L9.049 2.927z"/></svg>
+            <svg class="w-4 h-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.921-.755 1.688-1.54 1.118L10 13.347l-3.453 2.708c-.785.57-1.84-.197-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.543 9.393c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69L9.049 2.927z"/></svg>
+            <svg class="w-4 h-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.921-.755 1.688-1.54 1.118L10 13.347l-3.453 2.708c-.785.57-1.84-.197-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.543 9.393c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69L9.049 2.927z"/></svg>
+          </div>
+          <span class="text-sm text-gray-600">5.0</span>
+        </div>
+
+        <div class="flex items-center">
+          <a href="#" class="w-12 h-12 rounded-full overflow-hidden mr-4 flex-shrink-0">
+            <img src="/assets/img/Perfil01.jpg" alt="Foto de Carlos Mendes" class="w-full h-full object-cover">
+          </a>
+          <div>
+            <h4 class="font-semibold text-gray-900 text-base md:text-lg">Marcio Mendes</h4>
+            <p class="text-gray-600 text-sm">Bragança Paulista</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Depoimento 2 -->
+      <div class="testimonial-card bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 scale-in">
+        <div class="text-red-600 mb-4 text-4xl">
+          <i class="fas fa-quote-left"></i>
+        </div>
+        <p class="text-gray-700 mb-6 italic text-base md:text-lg leading-relaxed">
+          "Equipe muito atenciosa! Explicaram tudo com clareza e cumpriram o prazo certinho. Super
+          recomendo a Na Car!"
+        </p>
+        <!-- Avaliação: 5 estrelas -->
+        <div class="flex items-center mb-4" aria-label="Avaliação: 5 de 5 estrelas">
+          <div class="flex gap-1 mr-3">
+            <!-- 5 SVG stars -->
+            <svg class="w-4 h-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.921-.755 1.688-1.54 1.118L10 13.347l-3.453 2.708c-.785.57-1.84-.197-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.543 9.393c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69L9.049 2.927z"/></svg>
+            <svg class="w-4 h-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.921-.755 1.688-1.54 1.118L10 13.347l-3.453 2.708c-.785.57-1.84-.197-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.543 9.393c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69L9.049 2.927z"/></svg>
+            <svg class="w-4 h-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.921-.755 1.688-1.54 1.118L10 13.347l-3.453 2.708c-.785.57-1.84-.197-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.543 9.393c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69L9.049 2.927z"/></svg>
+            <svg class="w-4 h-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.921-.755 1.688-1.54 1.118L10 13.347l-3.453 2.708c-.785.57-1.84-.197-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.543 9.393c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69L9.049 2.927z"/></svg>
+            <svg class="w-4 h-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.921-.755 1.688-1.54 1.118L10 13.347l-3.453 2.708c-.785.57-1.84-.197-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.543 9.393c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69L9.049 2.927z"/></svg>
+          </div>
+          <span class="text-sm text-gray-600">5.0</span>
+        </div>
+
+        <div class="flex items-center">
+          <a href="#" class="w-12 h-12 rounded-full overflow-hidden mr-4 flex-shrink-0">
+            <img src="/assets/img/perfil03.jpg" alt="Foto de Juliana Oliveira" class="w-full h-full object-cover">
+          </a>
+          <div>
+            <h4 class="font-semibold text-gray-900 text-base md:text-lg">Juliana Oliveira</h4>
+            <p class="text-gray-600 text-sm">Atibaia</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Depoimento 3 -->
+      <div class="testimonial-card bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 scale-in">
+        <div class="text-red-600 mb-4 text-4xl">
+          <i class="fas fa-quote-left"></i>
+        </div>
+        <p class="text-gray-700 mb-6 italic text-base md:text-lg leading-relaxed">
+          "Excelente oficina! Já fiz manutenção e pintura com eles e sempre saio satisfeito. Parceria com
+          seguradora facilitou muito."
+        </p>
+
+                <!-- Avaliação: 5 estrelas -->
+        <div class="flex items-center mb-4" aria-label="Avaliação: 5 de 5 estrelas">
+          <div class="flex gap-1 mr-3">
+            <!-- 5 SVG stars -->
+            <svg class="w-4 h-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.921-.755 1.688-1.54 1.118L10 13.347l-3.453 2.708c-.785.57-1.84-.197-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.543 9.393c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69L9.049 2.927z"/></svg>
+            <svg class="w-4 h-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.921-.755 1.688-1.54 1.118L10 13.347l-3.453 2.708c-.785.57-1.84-.197-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.543 9.393c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69L9.049 2.927z"/></svg>
+            <svg class="w-4 h-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.921-.755 1.688-1.54 1.118L10 13.347l-3.453 2.708c-.785.57-1.84-.197-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.543 9.393c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69L9.049 2.927z"/></svg>
+            <svg class="w-4 h-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.921-.755 1.688-1.54 1.118L10 13.347l-3.453 2.708c-.785.57-1.84-.197-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.543 9.393c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69L9.049 2.927z"/></svg>
+            <svg class="w-4 h-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.921-.755 1.688-1.54 1.118L10 13.347l-3.453 2.708c-.785.57-1.84-.197-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.543 9.393c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69L9.049 2.927z"/></svg>
+          </div>
+          <span class="text-sm text-gray-600">5.0</span>
+        </div>
+
+        <div class="flex items-center">
+          <a href="#" class="w-12 h-12 rounded-full overflow-hidden mr-4 flex-shrink-0">
+            <img src="/assets/img/perfil02.jpg" alt="Foto de Renato Costa" class="w-full h-full object-cover">
+          </a>
+          <div>
+            <h4 class="font-semibold text-gray-900 text-base md:text-lg">Renato Costa</h4>
+            <p class="text-gray-600 text-sm">Cliente há 4 anos</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center mt-16 fade-up">
+      <p class="text-base md:text-lg mb-6 text-gray-800">
+        Faça parte dessa experiência — traga seu carro para a <span class="font-semibold text-red-600">Na Car!</span>
+      </p>
+      <a href="#"
+        target="_blank"
+        class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium text-base md:text-lg transition-all duration-300 transform hover:scale-105 inline-flex items-center gap-2 shadow-lg">
+        <i class="fab fa-whatsapp text-lg"></i> Agende seu atendimento agora!
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- MAPA - DUAS LOJAS -->
+<section class="relative bg-white py-16 fade-left">
+  <div class="max-w-7xl mx-auto px-6">
+    <h2 class="text-3xl font-bold text-red-600 text-center mb-4">Nossos Centros Automotivo</h2>
+    <p class="text-gray-600 text-center mb-12">Escolha a unidade mais próxima de você</p>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Loja 1 - Atibaia -->
+      <div class="text-center fade-left">
+        <div class="p-4 mb-4">
+          <h3 class="text-xl font-bold text-gray-900 flex justify-center">Loja Atibaia - SP</h3>
+        </div>
+        <p class="text-gray-600 mb-4">
+          <i class="fas fa-map-marker-alt text-red-600 mr-2"></i>
+          Av. Jerônimo de Camargo, 3275 - Jardim Terceiro Centenário<br>
+          Atibaia - SP, 12944-651
+        </p>
+        <div class="h-64 rounded-lg overflow-hidden shadow-lg border border-gray-200">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3667.123456789012!2d-46.55000000000001!3d-23.11700000000000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cef7b5a7a8d8d9%3A0x1234567890abcdef!2sAv.%20Jer%C3%B4nimo%20de%20Camargo%2C%203275%20-%20Jardim%20Terceiro%20Centen%C3%A1rio%2C%20Atibaia%20-%20SP%2C%2012944-651!5e0!3m2!1spt-BR!2sbr!4v1700000000000"
+            width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+        <div class="mt-4 flex justify-center space-x-4 text-sm text-gray-600">
+          <span><i class="fas fa-phone text-red-600 mr-1"></i> (11) 9999-9999</span>
+          <span><i class="fas fa-phone text-red-600 mr-1"></i> (11) 9999-9999</span>
+        </div>
+      </div>
+
+      <!-- Loja 2 - Bragança Paulista -->
+      <div class="text-center fade-right">
+        <div class="p-4 mb-4">
+          <h3 class="text-xl font-bold text-gray-900 flex justify-center">Loja Bragança Paulista - SP</h3>
+        </div>
+        <p class="text-gray-600 mb-4">
+          <i class="fas fa-map-marker-alt text-red-600 mr-2"></i>
+          R. Servidão, 237 - São Lourenço<br>
+          Bragança Paulista - SP, 12908-820
+        </p>
+        <div class="h-64 rounded-lg overflow-hidden shadow-lg border border-gray-200">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3667.987654321098!2d-46.54000000000001!3d-23.11800000000000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cef7b5a7a8d8d9%3A0xfedcba9876543210!2sR.%20Servid%C3%A3o%2C%20237%20-%20S%C3%A3o%20Louren%C3%A7o%2C%20Bragan%C3%A7a%20Paulista%20-%20SP%2C%2012908-820!5e0!3m2!1spt-BR!2sbr!4v1700000000000"
+            width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+        <div class="mt-4 flex justify-center space-x-4 text-sm text-gray-600">
+          <span><i class="fas fa-phone text-red-600 mr-1"></i> (11) 9999-9999</span>
+          <span><i class="fas fa-phone text-red-600 mr-1"></i> (11) 9999-9999</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <!-- FAQ -->
+    <section class="relative bg-gray-50 text-center py-20">
+        <h2 class="text-3xl font-bold text-gray-800 mb-8 fade-right">Ficou com dúvidas? A gente te ajuda!</h2>
+
+        <div class="max-w-2xl mx-auto space-y-4 text-left fade-right">
+
+            <!-- Item 1 -->
+            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                <button onclick="toggleFAQ(1)"
+                    class="w-full flex justify-between items-center px-6 py-4 text-gray-800 font-semibold focus:outline-none">
+                    <span>Horário de atendimento</span>
+                    <span id="icon1" class="text-2xl text-red-600">+</span>
+                </button>
+                <div id="faq1" class="hidden px-6 pb-4 text-gray-600">
+                    Segunda a sexta: 8h às 18h <br>
+                    Sábado: 8h às 12h
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                <button onclick="toggleFAQ(2)"
+                    class="w-full flex justify-between items-center px-6 py-4 text-gray-800 font-semibold focus:outline-none">
+                    <span>Quais serviços vocês oferecem?</span>
+                    <span id="icon2" class="text-2xl text-red-600">+</span>
+                </button>
+                <div id="faq2" class="hidden px-6 pb-4 text-gray-600">
+                    Mecânica geral, revisão completa, troca de óleo, diagnóstico eletrônico, freios, suspensão e muito
+                    mais.
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                <button onclick="toggleFAQ(3)"
+                    class="w-full flex justify-between items-center px-6 py-4 text-gray-800 font-semibold focus:outline-none">
+                    <span>Como agendar um serviço?</span>
+                    <span id="icon3" class="text-2xl text-red-600">+</span>
+                </button>
+                <div id="faq3" class="hidden px-6 pb-4 text-gray-600">
+                    Você pode agendar pelo nosso WhatsApp clicando no botão abaixo 👇
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-8 fade-right">
+            <a href="#"
+                target="_blank"
+                class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium text-base transition-all duration-300 transform hover:scale-105 inline-flex items-center gap-2 shadow-lg">
+                <i class="fab fa-whatsapp text-lg"></i> Fale conosco pelo WhatsApp!
+            </a>
+        </div>
+
+        <!-- Onda separadora para o footer -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+            <svg viewBox="0 0 500 80" preserveAspectRatio="none" class="w-full h-20">
+                <path d="M0,40 C150,-20 350,100 500,40 L500,80 L0,80 Z" fill="#960000"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="relative bg-[#960000] py-12">
+        <!-- Container principal -->
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center md:items-start justify-between gap-8 max-w-6xl mx-auto">
+
+                <!-- Coluna esquerda -->
+                <div class="text-center md:text-left space-y-4 flex-1 fade-left">
+                    <div class="flex items-center justify-center md:justify-start gap-3">
+                        <i class="fas fa-cube text-3xl text-gray-300"></i>
+                        <h3 class="text-xl font-bold text-white">NA CAR</h3>
+                    </div>
+                    <p class="text-gray-200 text-sm max-w-md">
+                        © <span id="current-year">2025 </span>Marcio Bezerra. Todos os direitos reservados.
+                    </p>
+                </div>
+
+                <!-- Coluna direita -->
+                <div class="text-center md:text-right flex-1 fade-right">
+                    <h3 class="text-sm font-semibold text-gray-300 uppercase tracking-wide mb-4">Redes Sociais</h3>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="https://www.facebook.com/nacaroficina/"
+                                class="hover:text-blue-300 inline-flex items-center justify-center md:justify-end transition-all duration-300 text-gray-200">
+                                <i class="fab fa-facebook mr-3 text-blue-400 text-lg"></i> Facebook
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/nacaroficina/"
+                                class="hover:text-pink-300 inline-flex items-center justify-center md:justify-end transition-all duration-300 text-gray-200">
+                                <i class="fab fa-instagram mr-3 text-pink-400 text-lg"></i> Instagram
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://wa.me/551124275202"
+                                class="hover:text-green-300 inline-flex items-center justify-center md:justify-end transition-all duration-300 text-gray-200">
+                                <i class="fab fa-whatsapp mr-3 text-green-400 text-lg"></i> WhatsApp
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+        <!-- Botão WhatsApp Flutuante -->
+    <div class="fixed bottom-6 right-6 z-50">
+      <!-- Efeito de pulso -->
+      <div class="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75"></div>
+
+      <!-- Botão principal -->
+      <a href="https://wa.me/5588996256876?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20V%20Lopes%20Motos%20e%20gostaria%20de%20solicitar%20um%20or%C3%A7amento%20ou%20mais%20informa%C3%A7%C3%B5es."
+        target="_blank"
+        class="relative bg-green-500 hover:bg-green-600 w-16 h-16 rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 transform hover:scale-110">
+        <i class="fab fa-whatsapp text-white text-2xl"></i>
+      </a>
+    </div>
+
+    <script src="js/animacao.js"></script>
+    <script src="js/carroselServico.js"></script>
+    <script src="js/carroselGaleria.js"></script>
+    <script src="js/faq.js"></script>
+</body>
+
+</html>
