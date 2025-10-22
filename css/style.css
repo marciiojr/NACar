@@ -1,4 +1,21 @@
-        /* Transições suaves */
+/* CORREÇÃO DO SCROLL HORIZONTAL */
+html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+    position: relative;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* Garantir que imagens não vazem */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Transições suaves */
         .fade-in {
             opacity: 0;
             transform: translateY(30px);
