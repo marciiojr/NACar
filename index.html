@@ -18,32 +18,37 @@
 <body class="bg-gray-100 text-white font-sans">
 
     <!-- HERO SECTION -->
-    <section class="relative flex items-center justify-center h-screen overflow-hidden">
+    <section class="relative flex items-center justify-center min-h-screen overflow-hidden">
         <!-- Imagem de fundo -->
-        <img src="estacao-de-detalhamento-de-lavagem-de-carro.jpg" alt="Oficina NA Car"
+        <img src="assets/img/Revisao1.jpeg" alt="Oficina NA Car"
             class="absolute inset-0 w-full h-full object-cover brightness-75">
 
         <!-- Camada gradiente -->
         <div class="absolute inset-0 hero-gradient"></div>
 
         <!-- Conteúdo -->
-        <div class="relative z-10 max-w-4xl text-left p-4 md:p-12">
-            <div class="fade-left">
-                <img src="logo-removebg-preview.png" alt="Logo NA Car" class="w-52 drop-shadow-lg">
+        <div class="relative z-10 w-full max-w-4xl text-center md:text-left px-4 md:px-12 py-8">
+            <!-- Logo centralizada no mobile -->
+            <div class="fade-left flex justify-center md:justify-start mb-6 md:mb-4">
+                <img src="logo-removebg-preview.png" alt="Logo NA Car" class="w-40 md:w-52 drop-shadow-lg">
             </div>
-            <h1 class="text-3xl md:text-5xl font-bold mb-4 fade-left">
-                Cuidamos do seu carro com — <br>
-                <span class="text-red-600">excelência, agilidade e confiança</span> há mais de 18 anos
+            
+            <!-- Título com a fonte que você gostou -->
+            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-4xl font-extrabold tracking-tight drop-shadow-md leading-tight mb-4 md:mb-6 fade-left">
+                Cuidamos do seu carro com <span class="text-green-600">excelência, agilidade e confiança</span> há mais de 18 anos
             </h1>
-            <p class="text-base md:text-xl text-gray-300 font-semibold mb-8 fade-left">
+            
+            <!-- Texto com tamanho otimizado -->
+            <p class="text-sm md:text-lg lg:text-xl text-gray-300 font-semibold mb-6 md:mb-8 fade-left leading-relaxed max-w-2xl mx-auto md:mx-0">
                 NA CAR é referência em funilaria, pintura e mecânica em geral.
                 Oferecemos atendimento ágil, peças de qualidade e parceria com todas as seguradoras.
-
             </p>
-            <div class="mt-4 fade-left">
+            
+            <!-- Botão CTA centralizado no mobile -->
+            <div class="fade-left flex justify-center md:justify-start">
                 <a href="#"
                     target="_blank"
-                    class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium text-base transition-all duration-300 transform hover:scale-105 inline-flex items-center gap-2 shadow-lg">
+                    class="bg-green-500 hover:bg-green-600 text-white px-5 py-3 md:px-6 md:py-3 rounded-lg font-medium text-sm md:text-base transition-all duration-300 transform hover:scale-105 inline-flex items-center gap-2 shadow-lg w-auto">
                     <i class="fab fa-whatsapp text-lg"></i> Agende seu atendimento agora!
                 </a>
             </div>
@@ -51,7 +56,7 @@
 
         <!-- ONDULAÇÃO BRANCA INFERIOR -->
         <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
-            <svg viewBox="0 0 500 80" preserveAspectRatio="none" class="w-full h-24">
+            <svg viewBox="0 0 500 80" preserveAspectRatio="none" class="w-full h-20 md:h-24">
                 <path d="M0,40 C150,100 350,-20 500,40 L500,80 L0,80 Z" fill="white"></path>
             </svg>
         </div>
@@ -226,7 +231,7 @@
         <!-- Onda inferior -->
     <div class="max-w-6xl mx-auto text-center">
         <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Trabalhamos com todas <span class="text-red-600">seguradoras</span>
+            Trabalhamos com todas as <span class="text-red-600"> Seguradoras</span>
         </h2>
         <p class="text-gray-600 text-lg mb-12 max-w-3xl mx-auto">
             Parceria com todas as seguradoras do mercado para facilitar seu atendimento
@@ -258,7 +263,7 @@
         <!-- Destaque para veículos pesados em Bragança -->
         <div class="mt-12 bg-red-50 border border-red-200 rounded-2xl p-8 max-w-4xl mx-auto">
             <h3 class="text-2xl font-bold text-red-700 mb-4">
-                <i class="fas fa-truck-moving mr-3"></i>Atendimento Especializado
+                Atendimento Especializado
             </h3>
             <p class="text-gray-700 text-lg">
                 Em nossa unidade de <strong>Bragança Paulista</strong>, oferecemos serviços especializados para 
@@ -554,7 +559,7 @@
         </div>
 <!-- Na seção do mapa, adicione este destaque após o iframe de Bragança: -->
 <div class="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-    <h4 class="font-bold text-red-700 mb-2 flex items-center">
+    <h4 class="font-bold text-red-700 mb-2 flex justify-center items-center">
         <i class="fas fa-tools mr-2"></i>Especialidade em Bragança:
     </h4>
     <p class="text-sm text-gray-700">
